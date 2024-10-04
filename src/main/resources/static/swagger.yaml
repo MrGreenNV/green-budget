@@ -1,0 +1,846 @@
+openapi: 3.0.0
+info:
+  title: Budget Service
+  description: Backend-сервис и модель данных для составления бюджета
+  contact:
+    name: mrGreenNV
+    email: averkievnv@gmail.com
+    url: https://github.com/MrGreenNV
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/
+    description: Локальный  сервер для управления бюджетом.
+
+components:
+
+  schemas:
+    UserCreateDTO:
+      description: Данные для создания пользователя.
+      type: object
+      properties:
+        username:
+          type: string
+          description: Имя пользователя.
+          example: user_name
+        email:
+          type: string
+          description: Email пользователя.
+          example: user_name@mail.ru
+        password:
+          type: string
+          description: Пароль пользователя.
+          example: password123456!
+
+    FinancialAccountDTO:
+      description: Данные для создания счёта.
+      type: object
+      properties:
+        accountName:
+          type: string
+          description: Название счёта.
+          example: T-bank
+        balance:
+          type: numeric
+          description: Баланс счёта.
+          example: 100500.00
+        owner:
+          type: integer
+          description: Id пользоователя, владеющего данным счётом.
+          example: 1
+
+    TransactionCategoryDTO:
+      description: Данные для создания категории транзакции.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название категории.
+          example: Транспорт
+        parent:
+          type: integer
+          description: Id родительской категории.
+          example: 1
+
+    UserModelView:
+      description: Данные для отображения пользователя.
+      type: object
+      properties:
+        username:
+          type: string
+          description: Имя пользователя.
+          example: user_name
+        email:
+          type: string
+          description: Email пользователя.
+          example: user_name@mail.ru
+        accounts:
+          description: Список счетов пользователя.
+          type: array
+          items:
+            $ref: '#/components/schemas/FinancialAccountModelView'
+
+    FinancialAccountModelView:
+      description: Данные для отображения счёта.
+      type: object
+      properties:
+        accountName:
+          type: string
+          description: Название счёта.
+          example: Альфа
+        balance:
+          type: number
+          description: Баланс счёта.
+          example: 1234567.89
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionModelView'
+
+    TransactionModelView:
+      description: Данные для отображения транзакции.
+      type: object
+      properties:
+        transactionType:
+          type: string
+          description: Тип транзакции.
+          example: EXPENSE, INCOME
+        sumOfTransaction:
+          type: string
+          description: Сумма транзакции.
+          example: "1234567.89"
+        categoryName:
+          type: string
+          description: Название категории.
+          example: Продукты
+        financialAccount:
+          type: string
+          description: Название счёта.
+          example: СБЕР
+        updatedAt:
+          type: string
+          description: Время изменения транзакции.
+          example: 2024-09-30 00:00:00
+
+    TransactionCategoryModelView:
+      description: Данные для отображения категории.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название категории.
+          example: Транспорт
+        childCategories:
+          type: array
+          description: Id дочерних категорий.
+          items:
+            type: integer
+            example: [2, 4]
+        parentCategory:
+          type: integer
+          description: Id родительской категории.
+          example: 1
+
+    UserDTO:
+      description: Данные для отображения транзакции.
+      type: object
+      properties:
+        username:
+          type: string
+          description: Имя пользователя.
+          example: new_user_name
+        email:
+          type: string
+          description: Email пользователя.
+          example: new_user_name@gmail.com
+        password:
+          type: string
+          description: Текущий пароль.
+          example: password12345!
+        newPassword:
+          type: string
+          description: Новый пароль.
+          example: password123454@
+
+    TransactionDTO:
+      description: Данные для отображения транзакции.
+      type: object
+      properties:
+        transactionType:
+          type: string
+          description: Имя пользователя.
+          example: new_user_name
+        email:
+          type: string
+          description: Email пользователя.
+          example: new_user_name@gmail.com
+        password:
+          type: string
+          description: Текущий пароль.
+          example: password12345!
+        newPassword:
+          type: string
+          description: Новый пароль.
+          example: password123454@
+
+
+paths:
+
+  /api/v1/users:
+    post:
+      tags:
+        - UsersController
+      summary: Создание нового пользователя.
+      requestBody:
+        required: true
+        description: Данные для создания новог пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateDTO'
+      responses:
+        '200':
+          description: Пользователь успешно создан.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelView'
+    get:
+      tags:
+        - UsersController
+      summary: Возвращает список пользователей
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех пользователей.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserModelView'
+
+  /api/v1/users/{userId}:
+    put:
+      tags:
+        - UsersController
+      summary: Редактирование пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: id обновляемого пользователя.
+          example: 1
+      requestBody:
+        required: true
+        description: Данные для обновления пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      responses:
+        '200':
+          description: Обновлённый пользователь.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelView'
+
+    get:
+      tags:
+        - UsersController
+      summary: Отображение пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемого пользователя.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемый пользователь.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelView'
+
+    delete:
+      tags:
+        - UsersController
+      summary: Soft удаление пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: id удаляемого пользователя.
+          example: 1
+      responses:
+        '200':
+          description: Статус пользователя изменён на DELETED.
+
+  /api/v1/users/{userId}/active:
+    get:
+      tags:
+        - UsersController
+      summary: Отображение активного пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемого активного пользователя.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемый активный пользователь.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelView'
+
+  /api/v1/users/active:
+    get:
+      tags:
+        - UsersController
+      summary: Возвращает список активных пользователей
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех активных пользователей.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserModelView'
+
+
+  /api/v1/categories:
+    post:
+      tags:
+        - CategoriesController
+      summary: Создание новой категории транзакции.
+      requestBody:
+        required: true
+        description: Данные для создания новой категории транзакции.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionCategoryDTO'
+      responses:
+        '200':
+          description: RКатегория успешно создана.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionCategoryModelView'
+    get:
+      tags:
+        - CategoriesController
+      summary: Возвращает список категорий
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех категорий.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionCategoryModelView'
+
+  /api/v1/categories/{categoryId}:
+    put:
+      tags:
+        - CategoriesController
+      summary: Редактирование категории
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: id обновляемой категории.
+          example: 1
+      requestBody:
+        required: true
+        description: Данные для обновления категории.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionCategoryDTO'
+      responses:
+        '200':
+          description: Обновлённая категория.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionCategoryModelView'
+
+    get:
+      tags:
+        - CategoriesController
+      summary: Отображение категории
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемой категории.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемая категория.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionCategoryModelView'
+
+    delete:
+      tags:
+        - CategoriesController
+      summary: Soft удаление категории
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: id удаляемой категории.
+          example: 1
+      responses:
+        '200':
+          description: Статус категории изменён на DELETED.
+
+  /api/v1/categories/{categoryId}/active:
+    get:
+      tags:
+        - CategoriesController
+      summary: Отображение активной категории
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемой активной категории.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемая активная категория.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionCategoryModelView'
+
+  /api/v1/categories/active:
+    get:
+      tags:
+        - CategoriesController
+      summary: Возвращает список активных категорий
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех активных категорий.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionCategoryModelView'
+
+
+  /api/v1/accounts:
+    post:
+      tags:
+        - AccountsController
+      summary: Создание нового счёта.
+      requestBody:
+        required: true
+        description: Данные для создания нового счёта.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinancialAccountDTO'
+      responses:
+        '200':
+          description: Пользователь успешно создан.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+    get:
+      tags:
+        - AccountsController
+      summary: Возвращает список счетов
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех счетов.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FinancialAccountModelView'
+
+  /api/v1/accounts/{accountId}:
+    put:
+      tags:
+        - AccountsController
+      summary: Редактирование счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id обновляемого счёта.
+          example: 1
+      requestBody:
+        required: true
+        description: Данные для обновления счёта.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinancialAccountDTO'
+      responses:
+        '200':
+          description: Обновлённый счёт.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+
+    get:
+      tags:
+        - AccountsController
+      summary: Отображение счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемого счёта.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемый счёт.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+
+    delete:
+      tags:
+        - AccountsController
+      summary: Soft удаление счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id удаляемого счёта.
+          example: 1
+      responses:
+        '200':
+          description: Статус счёта изменён на DELETED.
+
+  /api/v1/accounts/{accountId}/active:
+    get:
+      tags:
+        - AccountsController
+      summary: Отображение активного счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемого активного счёта.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемый активный счёта.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+
+  /api/v1/accounts/active:
+    get:
+      tags:
+        - AccountsController
+      summary: Возвращает список активных счетов
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех активных счетов.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FinancialAccountModelView'
+
+
+
+
+
+
+  /api/v1/transactions:
+    post:
+      tags:
+        - TransactionsController
+      summary: Создание новой транзакции
+      requestBody:
+        required: true
+        description: Данные для создания новой транзакции
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionDTO'
+      responses:
+        '200':
+          description: Пользователь успешно создан.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+    get:
+      tags:
+        - AccountsController
+      summary: Возвращает список счетов
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех счетов.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FinancialAccountModelView'
+
+  /api/v1/accounts/{accountId}:
+    put:
+      tags:
+        - AccountsController
+      summary: Редактирование счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id обновляемого счёта.
+          example: 1
+      requestBody:
+        required: true
+        description: Данные для обновления счёта.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinancialAccountDTO'
+      responses:
+        '200':
+          description: Обновлённый счёт.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+
+    get:
+      tags:
+        - AccountsController
+      summary: Отображение счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемого счёта.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемый счёт.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+
+    delete:
+      tags:
+        - AccountsController
+      summary: Soft удаление счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id удаляемого счёта.
+          example: 1
+      responses:
+        '200':
+          description: Статус счёта изменён на DELETED.
+
+  /api/v1/accounts/{accountId}/active:
+    get:
+      tags:
+        - AccountsController
+      summary: Отображение активного счёта
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: integer
+          required: true
+          description: id запрашиваемого активного счёта.
+          example: 1
+      responses:
+        '200':
+          description: Запрашиваемый активный счёта.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccountModelView'
+
+  /api/v1/accounts/active:
+    get:
+      tags:
+        - AccountsController
+      summary: Возвращает список активных счетов
+      parameters:
+        - in: path
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Номер отображаемой страницы.
+          example: 1
+        - in: path
+          name: pageSize
+          schema:
+            type: integer
+          required: false
+          description: Количество отображаемых элементов на странице.
+          example: 10
+      responses:
+        '200':
+          description: Список всех активных счетов.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FinancialAccountModelView'

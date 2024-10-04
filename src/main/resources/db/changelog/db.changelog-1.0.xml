@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0" author="MrGreeNV">
+        <createTable tableName="users">
+            <column name="username" type="VARCHAR">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uid" type="VARCHAR">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="MrGreeNV">
+        <createTable tableName="financial_accounts">
+            <column name="account_name" type="VARCHAR">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="balance" type="NUMERIC">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="user_account_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uid" type="VARCHAR">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="MrGreeNV">
+        <createTable tableName="transactions">
+            <column name="type" type="VARCHAR">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="sum" type="NUMERIC">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="VARCHAR">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="financial_account_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uid" type="VARCHAR">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="MrGreeNV">
+        <createTable tableName="category_of_transactions">
+            <column name="name" type="VARCHAR">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="parent_category_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uid" type="VARCHAR">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="MrGreeNV">
+        <insert tableName="users">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="username" value="VXNlcl8x"/>
+            <column name="password" value="$2a$12$Lb66BfGp8Eol8baEqkR5fukYh1caA047WyJMe9S/hgGTW6dc2nE/O"/>
+            <column name="email" value="dXNlcl8xQG1haWwucnU="/>
+        </insert>
+        <insert tableName="users">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="username" value="VXNlcl8y"/>
+            <column name="password" value="$2a$12$UZcG6QT33odxWDpKWso/V.9ja/bTE8iQTc2oA.IGdO.Ypyye8jqfu"/>
+            <column name="email" value="dXNlcl8yQG1haWwucnU="/>
+        </insert>
+        <insert tableName="users">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="username" value="VXNlcl8z"/>
+            <column name="password" value="$2a$12$WrOFBZuY/bTBXwllg99OauHIquD5P4zCE1HgLZ3JK9KJgcOvRlAIO"/>
+            <column name="email" value="dXNlcl8zQG1haWwucnU="/>
+        </insert>
+        <insert tableName="users">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="DELETED"/>
+            <column name="username" value="VXNlcl80"/>
+            <column name="password" value="$2a$12$fA7l7n9PxKcGwujSi9dL8OfX1w7g58dfEJWEo5ZpU8uu5o74Gn11K"/>
+            <column name="email" value="dXNlcl80QG1haWwucnU="/>
+        </insert>
+        <insert tableName="users">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="DELETED"/>
+            <column name="username" value="VXNlcl81"/>
+            <column name="password" value="$2a$12$jPIXxZTHStkm6dCOaf3X.eGjE59uBeHFEO2EGaBhwQL9satQ8G/2O"/>
+            <column name="email" value="dXNlcl81QG1haWwucnU="/>
+        </insert>
+
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0JDQu9GM0YTQsA=="/>
+            <column name="balance" value="100.0"/>
+            <column name="user_account_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0JLQotCR"/>
+            <column name="balance" value="50.0"/>
+            <column name="user_account_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0JDQu9GM0YTQsA=="/>
+            <column name="balance" value="100.0"/>
+            <column name="user_account_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="DELETED"/>
+            <column name="account_name" value="0JLQotCR"/>
+            <column name="balance" value="50.0"/>
+            <column name="user_account_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0KHQkdCV0KA="/>
+            <column name="balance" value="500.0"/>
+            <column name="user_account_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0KHQkdCV0KA="/>
+            <column name="balance" value="50.0"/>
+            <column name="user_account_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0JDQu9GM0YTQsA=="/>
+            <column name="balance" value="1050.0"/>
+            <column name="user_account_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0JLQotCR"/>
+            <column name="balance" value="500.0"/>
+            <column name="user_account_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0KHQkdCV0KA="/>
+            <column name="balance" value="105.0"/>
+            <column name="user_account_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="financial_accounts">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="account_name" value="0JLQotCR"/>
+            <column name="balance" value="200.0"/>
+            <column name="user_account_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="category_of_transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="name" value="Еда"/>
+        </insert>
+        <insert tableName="category_of_transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="name" value="Продукты"/>
+            <column name="parent_category_id" value="1"/>
+        </insert>
+        <insert tableName="category_of_transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="name" value="Питание вне дома"/>
+            <column name="parent_category_id" value="1"/>
+        </insert>
+        <insert tableName="category_of_transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="name" value="Транспорт"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="sum" value="50"/>
+            <column name="category_id" value="2"/>
+            <column name="financial_account_id" value="1"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="sum" value="50"/>
+            <column name="category_id" value="3"/>
+            <column name="financial_account_id" value="1"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="sum" value="50"/>
+            <column name="category_id" value="3"/>
+            <column name="financial_account_id" value="3"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="sum" value="50"/>
+            <column name="category_id" value="3"/>
+            <column name="financial_account_id" value="7"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="INCOME"/>
+            <column name="sum" value="500"/>
+            <column name="category_id" value="3"/>
+            <column name="financial_account_id" value="3"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="INCOME"/>
+            <column name="sum" value="500"/>
+            <column name="category_id" value="4"/>
+            <column name="financial_account_id" value="1"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="uid" valueComputed="UUID()"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="type" value="INCOME"/>
+            <column name="sum" value="5000"/>
+            <column name="category_id" value="1"/>
+            <column name="financial_account_id" value="5"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
