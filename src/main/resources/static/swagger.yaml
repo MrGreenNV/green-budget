@@ -195,14 +195,14 @@ paths:
         required: true
         description: Данные для создания новог пользователя.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/UserCreateDTO'
       responses:
         '200':
           description: Пользователь успешно создан.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/UserModelView'
     get:
@@ -228,7 +228,7 @@ paths:
         '200':
           description: Список всех пользователей.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
@@ -251,14 +251,14 @@ paths:
         required: true
         description: Данные для обновления пользователя.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/UserDTO'
       responses:
         '200':
           description: Обновлённый пользователь.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/UserModelView'
 
@@ -278,7 +278,7 @@ paths:
         '200':
           description: Запрашиваемый пользователь.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/UserModelView'
 
@@ -315,7 +315,7 @@ paths:
         '200':
           description: Запрашиваемый активный пользователь.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/UserModelView'
 
@@ -343,7 +343,7 @@ paths:
         '200':
           description: Список всех активных пользователей.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
@@ -359,14 +359,14 @@ paths:
         required: true
         description: Данные для создания новой категории транзакции.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/TransactionCategoryDTO'
       responses:
         '200':
           description: RКатегория успешно создана.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/TransactionCategoryModelView'
     get:
@@ -392,7 +392,7 @@ paths:
         '200':
           description: Список всех категорий.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
@@ -415,14 +415,14 @@ paths:
         required: true
         description: Данные для обновления категории.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/TransactionCategoryDTO'
       responses:
         '200':
           description: Обновлённая категория.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/TransactionCategoryModelView'
 
@@ -442,7 +442,7 @@ paths:
         '200':
           description: Запрашиваемая категория.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/TransactionCategoryModelView'
 
@@ -479,7 +479,7 @@ paths:
         '200':
           description: Запрашиваемая активная категория.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/TransactionCategoryModelView'
 
@@ -507,7 +507,7 @@ paths:
         '200':
           description: Список всех активных категорий.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
@@ -523,14 +523,14 @@ paths:
         required: true
         description: Данные для создания нового счёта.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/FinancialAccountDTO'
       responses:
         '200':
           description: Пользователь успешно создан.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
     get:
@@ -556,7 +556,7 @@ paths:
         '200':
           description: Список всех счетов.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
@@ -579,14 +579,14 @@ paths:
         required: true
         description: Данные для обновления счёта.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/FinancialAccountDTO'
       responses:
         '200':
           description: Обновлённый счёт.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
 
@@ -606,7 +606,7 @@ paths:
         '200':
           description: Запрашиваемый счёт.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
 
@@ -643,7 +643,7 @@ paths:
         '200':
           description: Запрашиваемый активный счёта.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
 
@@ -671,7 +671,7 @@ paths:
         '200':
           description: Список всех активных счетов.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
@@ -691,19 +691,19 @@ paths:
         required: true
         description: Данные для создания новой транзакции
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/TransactionDTO'
       responses:
         '200':
           description: Пользователь успешно создан.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
     get:
       tags:
-        - AccountsController
+        - TransactionsController
       summary: Возвращает список счетов
       parameters:
         - in: path
@@ -724,16 +724,16 @@ paths:
         '200':
           description: Список всех счетов.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/FinancialAccountModelView'
 
-  /api/v1/accounts/{accountId}:
+  /api/v1/transactions/{transactionId}:
     put:
       tags:
-        - AccountsController
+        - TransactionsController
       summary: Редактирование счёта
       parameters:
         - in: path
@@ -747,20 +747,20 @@ paths:
         required: true
         description: Данные для обновления счёта.
         content:
-          application/json:
+          application/hal+json:
             schema:
               $ref: '#/components/schemas/FinancialAccountDTO'
       responses:
         '200':
           description: Обновлённый счёт.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
 
     get:
       tags:
-        - AccountsController
+        - TransactionsController
       summary: Отображение счёта
       parameters:
         - in: path
@@ -774,13 +774,13 @@ paths:
         '200':
           description: Запрашиваемый счёт.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
 
     delete:
       tags:
-        - AccountsController
+        - TransactionsController
       summary: Soft удаление счёта
       parameters:
         - in: path
@@ -794,10 +794,10 @@ paths:
         '200':
           description: Статус счёта изменён на DELETED.
 
-  /api/v1/accounts/{accountId}/active:
+  /api/v1/transactions/{transactionId}/active:
     get:
       tags:
-        - AccountsController
+        - TransactionsController
       summary: Отображение активного счёта
       parameters:
         - in: path
@@ -811,14 +811,14 @@ paths:
         '200':
           description: Запрашиваемый активный счёта.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 $ref: '#/components/schemas/FinancialAccountModelView'
 
-  /api/v1/accounts/active:
+  /api/v1/transactions/active:
     get:
       tags:
-        - AccountsController
+        - TransactionsController
       summary: Возвращает список активных счетов
       parameters:
         - in: path
@@ -839,7 +839,7 @@ paths:
         '200':
           description: Список всех активных счетов.
           content:
-            application/json:
+            application/hal+json:
               schema:
                 type: array
                 items:

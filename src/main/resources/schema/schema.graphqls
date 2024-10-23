@@ -1,0 +1,52 @@
+# Тип данных для пользователя
+type User {
+    id: ID!
+    uid: String!
+    username: String!
+    email: String!
+    createdAt: String!
+    updatedAt: String!
+    status: EntityStatus!
+    accounts: [FinancialAccount]
+}
+
+# Перечисление для статуса сущности
+enum EntityStatus {
+    ACTIVE
+    DELETED
+}
+
+# Тип данных для финансового аккаунта (если требуется)
+type FinancialAccount {
+    id: ID!
+    accountName: String!
+    balance: Float!
+}
+
+# Входные данные для создания пользователя
+input CreateUserInput {
+    username: String!
+    email: String!
+    password: String!
+}
+
+# Входные данные для обновления пользователя
+input UpdateUserInput {
+    username: String
+    email: String
+    password: String
+}
+
+# Запросы (Query)
+type Query {
+    getUserInfo(id: ID!): User
+    getAllActiveUsers(page: Int, size: Int): [User!]
+    getAllUsers(page: Int, size: Int): [User!]
+}
+
+# Мутации (Mutation)
+type Mutation {
+    createUser(input: CreateUserInput!): User!
+    updateUser(id: ID!, input: UpdateUserInput!): User!
+    deleteUser(id: ID!): Boolean!
+}
