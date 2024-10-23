@@ -50,3 +50,57 @@ type Mutation {
     updateUser(id: ID!, input: UpdateUserInput!): User!
     deleteUser(id: ID!): Boolean!
 }
+
+
+# Welcome to GraphiQL
+#
+# GraphiQL is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# Type queries into this side of the screen, and you will see intelligent
+# typeaheads aware of the current GraphQL type schema and live syntax and
+# validation errors highlighted within the text.
+#
+# GraphQL queries typically start with a "{" character. Lines that start
+# with a # are ignored.
+#
+# An example GraphQL query might look like:
+#
+#     {
+#       field(arg: "value") {
+#         subField
+#       }
+#     }
+#
+# Keyboard shortcuts:
+#
+#   Prettify query:  Shift-Ctrl-P (or press the prettify button)
+#
+#  Merge fragments:  Shift-Ctrl-M (or press the merge button)
+#
+#        Run Query:  Ctrl-Enter (or press the play button)
+#
+#    Auto Complete:  Ctrl-Space (or just start typing)
+#
+# query {
+#   getUserInfo(id: 1) {
+#     username, id, email, accounts{accountName}
+#   }
+# }
+# mutation {
+#   createUser(input: {
+#     username: "new_user1",
+#     email: "new_user1@example.com",
+#     password: "password123"
+#   }) {
+#     id
+#     username
+#     email
+#   }
+# }
+
+# query {
+#   getAllActiveUsers(page: 0, size: 10) {
+#     username, id, email, accounts{accountName}
+#   }
+# }
