@@ -274,3 +274,5 @@ w
 G.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302,e\d\ed67eb178d523a4b3f117dcbe0eda5196367ceec
 ‰
 Ygateway-service/src/main/java/ru/averkiev/gateway/views/TransactionCategoryModelView.java,f\a\fa60b1f9a64a0149a4ea22efdb980d55a4c6748d
+E
+data/budget_app.mv.db,3\9\3998ce88d8e7e55b32fc60fade87f9365cbe4091
