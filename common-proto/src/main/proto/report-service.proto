@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ru.averkiev.report;
+
+// Сообщение запроса с дополнительными параметрами
+message ReportRequest {
+    string id_user = 1;     // Идентификатор пользователя
+    string id_account = 2;  // Идентификатор счета
+    string start_date = 3;  // Дата начала периода
+    string end_date = 4;    // Дата конца периода
+}
+
+// Сообщение ответа
+message ReportResponse {
+    string report_data = 1;  // Данные отчета
+}
+
+// Сервис, который генерирует отчет
+service ReportService {
+    rpc GetReport (ReportRequest) returns (ReportResponse);
+}
