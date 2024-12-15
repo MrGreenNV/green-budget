@@ -17,7 +17,7 @@ public abstract class BaseEntity {
     private long id;
 
     @Column(name = "uid")
-    private final UUID uid = UUID.randomUUID();
+    private final String uid = UUID.randomUUID().toString();
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -57,7 +57,7 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public UUID getUid() {
+    public String getUid() {
         return uid;
     }
 

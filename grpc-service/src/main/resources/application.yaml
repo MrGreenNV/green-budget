@@ -3,29 +3,18 @@ server:
 
 spring:
   datasource:
-#    url: jdbc:h2:file:./data/budget_app
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#    platform: h2
-    url: jdbc:postgresql://postgres:5432/budget_db
+    url: jdbc:postgresql://localhost:5432/budget_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 10
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
 
   jpa:
     hibernate:
-      ddl-auto: update  # Устанавливаем режим для обновления схемы базы данных
+      ddl-auto: none  # Устанавливаем режим для обновления схемы базы данных
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect  # Указываем диалект PostgreSQL
     show-sql: true  # Включаем вывод SQL запросов в лог
-    generate-ddl: true  # Включаем генерацию DDL
 
   rabbitmq:
     host: localhost  # Имя хоста для RabbitMQ

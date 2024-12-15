@@ -38,7 +38,7 @@ public class ReportServiceServer extends ReportServiceGrpc.ReportServiceImplBase
         responseObserver.onCompleted();
     }
 
-    private String createReport(final String userId) {
+    public String createReport(final String userId) {
         final String query = "select u.username, a.account_name, a.balance " +
                 "from users u " +
                 "join financial_accounts a on u.id = a.user_account_id " +
@@ -47,7 +47,7 @@ public class ReportServiceServer extends ReportServiceGrpc.ReportServiceImplBase
         try (final Connection con = DriverManager.getConnection(jdbcUrl, username, password);
              final PreparedStatement prSt = con.prepareStatement(query)) {
 
-            prSt.setString(1, userId);
+            prSt.setInt(1, Integer.parseInt(userId));
             final ResultSet rs = prSt.executeQuery();
 
             final StringBuilder report = new StringBuilder();
